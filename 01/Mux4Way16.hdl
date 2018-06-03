@@ -1,0 +1,157 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/01/Mux4Way16.hdl
+
+/**
+ * 4-way 16-bit multiplexor:
+ * out = a if sel == 00
+ *       b if sel == 01
+ *       c if sel == 10
+ *       d if sel == 11
+ */
+
+CHIP Mux4Way16 {
+    IN a[16], b[16], c[16], d[16], sel[2];
+    OUT out[16];
+
+    PARTS:
+    Not(in=sel[0], out=nSel0);
+    Not(in=sel[1], out=nSel1);
+    //route A
+    And(a=nSel0, b=nSel1, out=selA);
+    //route B
+    And(a=sel[0], b=nSel1, out=selB);
+    //route C
+    And(a=nSel0, b=sel[1], out=selC);
+    //route D
+    And(a=sel[0], b=sel[1], out=selD);
+    //0
+    And(a=selA, b=a[0], out=aAn0);
+    And(a=selB, b=b[0], out=bAn0);
+    And(a=selC, b=c[0], out=cAn0);
+    And(a=selD, b=d[0], out=dAn0);
+    Or(a=aAn0, b=bAn0, out=abAn0);
+    Or(a=cAn0, b=dAn0, out=cdAn0);
+    Or(a=abAn0, b=cdAn0, out=out[0]);
+    //1
+    And(a=selA, b=a[1], out=aAn1);
+    And(a=selB, b=b[1], out=bAn1);
+    And(a=selC, b=c[1], out=cAn1);
+    And(a=selD, b=d[1], out=dAn1);
+    Or(a=aAn1, b=bAn1, out=abAn1);
+    Or(a=cAn1, b=dAn1, out=cdAn1);
+    Or(a=abAn1, b=cdAn1, out=out[1]);
+    //2
+    And(a=selA, b=a[2], out=aAn2);
+    And(a=selB, b=b[2], out=bAn2);
+    And(a=selC, b=c[2], out=cAn2);
+    And(a=selD, b=d[2], out=dAn2);
+    Or(a=aAn2, b=bAn2, out=abAn2);
+    Or(a=cAn2, b=dAn2, out=cdAn2);
+    Or(a=abAn2, b=cdAn2, out=out[2]);
+    //3
+    And(a=selA, b=a[3], out=aAn3);
+    And(a=selB, b=b[3], out=bAn3);
+    And(a=selC, b=c[3], out=cAn3);
+    And(a=selD, b=d[3], out=dAn3);
+    Or(a=aAn3, b=bAn3, out=abAn3);
+    Or(a=cAn3, b=dAn3, out=cdAn3);
+    Or(a=abAn3, b=cdAn3, out=out[3]);
+    //4
+    And(a=selA, b=a[4], out=aAn4);
+    And(a=selB, b=b[4], out=bAn4);
+    And(a=selC, b=c[4], out=cAn4);
+    And(a=selD, b=d[4], out=dAn4);
+    Or(a=aAn4, b=bAn4, out=abAn4);
+    Or(a=cAn4, b=dAn4, out=cdAn4);
+    Or(a=abAn4, b=cdAn4, out=out[4]);
+    //5
+    And(a=selA, b=a[5], out=aAn5);
+    And(a=selB, b=b[5], out=bAn5);
+    And(a=selC, b=c[5], out=cAn5);
+    And(a=selD, b=d[5], out=dAn5);
+    Or(a=aAn5, b=bAn5, out=abAn5);
+    Or(a=cAn5, b=dAn5, out=cdAn5);
+    Or(a=abAn5, b=cdAn5, out=out[5]);
+    //6
+    And(a=selA, b=a[6], out=aAn6);
+    And(a=selB, b=b[6], out=bAn6);
+    And(a=selC, b=c[6], out=cAn6);
+    And(a=selD, b=d[6], out=dAn6);
+    Or(a=aAn6, b=bAn6, out=abAn6);
+    Or(a=cAn6, b=dAn6, out=cdAn6);
+    Or(a=abAn6, b=cdAn6, out=out[6]);
+    //7
+    And(a=selA, b=a[7], out=aAn7);
+    And(a=selB, b=b[7], out=bAn7);
+    And(a=selC, b=c[7], out=cAn7);
+    And(a=selD, b=d[7], out=dAn7);
+    Or(a=aAn7, b=bAn7, out=abAn7);
+    Or(a=cAn7, b=dAn7, out=cdAn7);
+    Or(a=abAn7, b=cdAn7, out=out[7]);
+    //8
+    And(a=selA, b=a[8], out=aAn8);
+    And(a=selB, b=b[8], out=bAn8);
+    And(a=selC, b=c[8], out=cAn8);
+    And(a=selD, b=d[8], out=dAn8);
+    Or(a=aAn8, b=bAn8, out=abAn8);
+    Or(a=cAn8, b=dAn8, out=cdAn8);
+    Or(a=abAn8, b=cdAn8, out=out[8]);
+    //9
+    And(a=selA, b=a[9], out=aAn9);
+    And(a=selB, b=b[9], out=bAn9);
+    And(a=selC, b=c[9], out=cAn9);
+    And(a=selD, b=d[9], out=dAn9);
+    Or(a=aAn9, b=bAn9, out=abAn9);
+    Or(a=cAn9, b=dAn9, out=cdAn9);
+    Or(a=abAn9, b=cdAn9, out=out[9]);
+    //10
+    And(a=selA, b=a[10], out=aAn10);
+    And(a=selB, b=b[10], out=bAn10);
+    And(a=selC, b=c[10], out=cAn10);
+    And(a=selD, b=d[10], out=dAn10);
+    Or(a=aAn10, b=bAn10, out=abAn10);
+    Or(a=cAn10, b=dAn10, out=cdAn10);
+    Or(a=abAn10, b=cdAn10, out=out[10]);
+    //11
+    And(a=selA, b=a[11], out=aAn11);
+    And(a=selB, b=b[11], out=bAn11);
+    And(a=selC, b=c[11], out=cAn11);
+    And(a=selD, b=d[11], out=dAn11);
+    Or(a=aAn11, b=bAn11, out=abAn11);
+    Or(a=cAn11, b=dAn11, out=cdAn11);
+    Or(a=abAn11, b=cdAn11, out=out[11]);
+    //12
+    And(a=selA, b=a[12], out=aAn12);
+    And(a=selB, b=b[12], out=bAn12);
+    And(a=selC, b=c[12], out=cAn12);
+    And(a=selD, b=d[12], out=dAn12);
+    Or(a=aAn12, b=bAn12, out=abAn12);
+    Or(a=cAn12, b=dAn12, out=cdAn12);
+    Or(a=abAn12, b=cdAn12, out=out[12]);
+    //13
+    And(a=selA, b=a[13], out=aAn13);
+    And(a=selB, b=b[13], out=bAn13);
+    And(a=selC, b=c[13], out=cAn13);
+    And(a=selD, b=d[13], out=dAn13);
+    Or(a=aAn13, b=bAn13, out=abAn13);
+    Or(a=cAn13, b=dAn13, out=cdAn13);
+    Or(a=abAn13, b=cdAn13, out=out[13]);
+    //14
+    And(a=selA, b=a[14], out=aAn14);
+    And(a=selB, b=b[14], out=bAn14);
+    And(a=selC, b=c[14], out=cAn14);
+    And(a=selD, b=d[14], out=dAn14);
+    Or(a=aAn14, b=bAn14, out=abAn14);
+    Or(a=cAn14, b=dAn14, out=cdAn14);
+    Or(a=abAn14, b=cdAn14, out=out[14]);
+    //15
+    And(a=selA, b=a[15], out=aAn15);
+    And(a=selB, b=b[15], out=bAn15);
+    And(a=selC, b=c[15], out=cAn15);
+    And(a=selD, b=d[15], out=dAn15);
+    Or(a=aAn15, b=bAn15, out=abAn15);
+    Or(a=cAn15, b=dAn15, out=cdAn15);
+    Or(a=abAn15, b=cdAn15, out=out[15]);
+}

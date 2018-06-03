@@ -1,0 +1,300 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/01/Mux8Way16.hdl
+
+/**
+ * 8-way 16-bit multiplexor:
+ * out = a if sel == 000
+ *       b if sel == 001
+ *       etc.
+ *       h if sel == 111
+ */
+
+CHIP Mux8Way16 {
+    IN a[16], b[16], c[16], d[16],
+       e[16], f[16], g[16], h[16],
+       sel[3];
+    OUT out[16];
+
+    PARTS:
+    Not(in=sel[0], out=nSel0);
+    Not(in=sel[1], out=nSel1);
+    Not(in=sel[2], out=nSel2);
+    And(a=nSel0, b=nSel1, out=s00);
+    And(a=sel[0], b=nSel1, out=s01);
+    And(a=nSel0, b=sel[1], out=s10);
+    And(a=sel[0], b=sel[1], out=s11);
+    //route A
+    And(a=s00, b=nSel2, out=selA);
+    //route B
+    And(a=s01, b=nSel2, out=selB);
+    //route C
+    And(a=s10, b=nSel2, out=selC);
+    //route D
+    And(a=s11, b=nSel2, out=selD);
+    //route E
+    And(a=s00, b=sel[2], out=selE);
+    //route F
+    And(a=s01, b=sel[2], out=selF);
+    //route G
+    And(a=s10, b=sel[2], out=selG);
+    //route H
+    And(a=s11, b=sel[2], out=selH);
+    //0
+    And(a=selA, b=a[0], out=aAn0);
+    And(a=selB, b=b[0], out=bAn0);
+    And(a=selC, b=c[0], out=cAn0);
+    And(a=selD, b=d[0], out=dAn0);
+    And(a=selE, b=e[0], out=eAn0);
+    And(a=selF, b=f[0], out=fAn0);
+    And(a=selG, b=g[0], out=gAn0);
+    And(a=selH, b=h[0], out=hAn0);
+    Or(a=aAn0, b=bAn0, out=abAn0);
+    Or(a=cAn0, b=dAn0, out=cdAn0);
+    Or(a=eAn0, b=fAn0, out=efAn0);
+    Or(a=gAn0, b=hAn0, out=ghAn0);
+    Or(a=abAn0, b=cdAn0, out=abcd0);
+    Or(a=efAn0, b=ghAn0, out=efgh0);
+    Or(a=abcd0, b=efgh0, out=out[0]);
+    //1
+    And(a=selA, b=a[1], out=aAn1);
+    And(a=selB, b=b[1], out=bAn1);
+    And(a=selC, b=c[1], out=cAn1);
+    And(a=selD, b=d[1], out=dAn1);
+    And(a=selE, b=e[1], out=eAn1);
+    And(a=selF, b=f[1], out=fAn1);
+    And(a=selG, b=g[1], out=gAn1);
+    And(a=selH, b=h[1], out=hAn1);
+    Or(a=aAn1, b=bAn1, out=abAn1);
+    Or(a=cAn1, b=dAn1, out=cdAn1);
+    Or(a=eAn1, b=fAn1, out=efAn1);
+    Or(a=gAn1, b=hAn1, out=ghAn1);
+    Or(a=abAn1, b=cdAn1, out=abcd1);
+    Or(a=efAn1, b=ghAn1, out=efgh1);
+    Or(a=abcd1, b=efgh1, out=out[1]);
+    //2
+    And(a=selA, b=a[2], out=aAn2);
+    And(a=selB, b=b[2], out=bAn2);
+    And(a=selC, b=c[2], out=cAn2);
+    And(a=selD, b=d[2], out=dAn2);
+    And(a=selE, b=e[2], out=eAn2);
+    And(a=selF, b=f[2], out=fAn2);
+    And(a=selG, b=g[2], out=gAn2);
+    And(a=selH, b=h[2], out=hAn2);
+    Or(a=aAn2, b=bAn2, out=abAn2);
+    Or(a=cAn2, b=dAn2, out=cdAn2);
+    Or(a=eAn2, b=fAn2, out=efAn2);
+    Or(a=gAn2, b=hAn2, out=ghAn2);
+    Or(a=abAn2, b=cdAn2, out=abcd2);
+    Or(a=efAn2, b=ghAn2, out=efgh2);
+    Or(a=abcd2, b=efgh2, out=out[2]);
+    //3
+    And(a=selA, b=a[3], out=aAn3);
+    And(a=selB, b=b[3], out=bAn3);
+    And(a=selC, b=c[3], out=cAn3);
+    And(a=selD, b=d[3], out=dAn3);
+    And(a=selE, b=e[3], out=eAn3);
+    And(a=selF, b=f[3], out=fAn3);
+    And(a=selG, b=g[3], out=gAn3);
+    And(a=selH, b=h[3], out=hAn3);
+    Or(a=aAn3, b=bAn3, out=abAn3);
+    Or(a=cAn3, b=dAn3, out=cdAn3);
+    Or(a=eAn3, b=fAn3, out=efAn3);
+    Or(a=gAn3, b=hAn3, out=ghAn3);
+    Or(a=abAn3, b=cdAn3, out=abcd3);
+    Or(a=efAn3, b=ghAn3, out=efgh3);
+    Or(a=abcd3, b=efgh3, out=out[3]);
+    //4
+    And(a=selA, b=a[4], out=aAn4);
+    And(a=selB, b=b[4], out=bAn4);
+    And(a=selC, b=c[4], out=cAn4);
+    And(a=selD, b=d[4], out=dAn4);
+    And(a=selE, b=e[4], out=eAn4);
+    And(a=selF, b=f[4], out=fAn4);
+    And(a=selG, b=g[4], out=gAn4);
+    And(a=selH, b=h[4], out=hAn4);
+    Or(a=aAn4, b=bAn4, out=abAn4);
+    Or(a=cAn4, b=dAn4, out=cdAn4);
+    Or(a=eAn4, b=fAn4, out=efAn4);
+    Or(a=gAn4, b=hAn4, out=ghAn4);
+    Or(a=abAn4, b=cdAn4, out=abcd4);
+    Or(a=efAn4, b=ghAn4, out=efgh4);
+    Or(a=abcd4, b=efgh4, out=out[4]);
+    //5
+    And(a=selA, b=a[5], out=aAn5);
+    And(a=selB, b=b[5], out=bAn5);
+    And(a=selC, b=c[5], out=cAn5);
+    And(a=selD, b=d[5], out=dAn5);
+    And(a=selE, b=e[5], out=eAn5);
+    And(a=selF, b=f[5], out=fAn5);
+    And(a=selG, b=g[5], out=gAn5);
+    And(a=selH, b=h[5], out=hAn5);
+    Or(a=aAn5, b=bAn5, out=abAn5);
+    Or(a=cAn5, b=dAn5, out=cdAn5);
+    Or(a=eAn5, b=fAn5, out=efAn5);
+    Or(a=gAn5, b=hAn5, out=ghAn5);
+    Or(a=abAn5, b=cdAn5, out=abcd5);
+    Or(a=efAn5, b=ghAn5, out=efgh5);
+    Or(a=abcd5, b=efgh5, out=out[5]);
+    //6
+    And(a=selA, b=a[6], out=aAn6);
+    And(a=selB, b=b[6], out=bAn6);
+    And(a=selC, b=c[6], out=cAn6);
+    And(a=selD, b=d[6], out=dAn6);
+    And(a=selE, b=e[6], out=eAn6);
+    And(a=selF, b=f[6], out=fAn6);
+    And(a=selG, b=g[6], out=gAn6);
+    And(a=selH, b=h[6], out=hAn6);
+    Or(a=aAn6, b=bAn6, out=abAn6);
+    Or(a=cAn6, b=dAn6, out=cdAn6);
+    Or(a=eAn6, b=fAn6, out=efAn6);
+    Or(a=gAn6, b=hAn6, out=ghAn6);
+    Or(a=abAn6, b=cdAn6, out=abcd6);
+    Or(a=efAn6, b=ghAn6, out=efgh6);
+    Or(a=abcd6, b=efgh6, out=out[6]);
+    //7
+    And(a=selA, b=a[7], out=aAn7);
+    And(a=selB, b=b[7], out=bAn7);
+    And(a=selC, b=c[7], out=cAn7);
+    And(a=selD, b=d[7], out=dAn7);
+    And(a=selE, b=e[7], out=eAn7);
+    And(a=selF, b=f[7], out=fAn7);
+    And(a=selG, b=g[7], out=gAn7);
+    And(a=selH, b=h[7], out=hAn7);
+    Or(a=aAn7, b=bAn7, out=abAn7);
+    Or(a=cAn7, b=dAn7, out=cdAn7);
+    Or(a=eAn7, b=fAn7, out=efAn7);
+    Or(a=gAn7, b=hAn7, out=ghAn7);
+    Or(a=abAn7, b=cdAn7, out=abcd7);
+    Or(a=efAn7, b=ghAn7, out=efgh7);
+    Or(a=abcd7, b=efgh7, out=out[7]);
+    //8
+    And(a=selA, b=a[8], out=aAn8);
+    And(a=selB, b=b[8], out=bAn8);
+    And(a=selC, b=c[8], out=cAn8);
+    And(a=selD, b=d[8], out=dAn8);
+    And(a=selE, b=e[8], out=eAn8);
+    And(a=selF, b=f[8], out=fAn8);
+    And(a=selG, b=g[8], out=gAn8);
+    And(a=selH, b=h[8], out=hAn8);
+    Or(a=aAn8, b=bAn8, out=abAn8);
+    Or(a=cAn8, b=dAn8, out=cdAn8);
+    Or(a=eAn8, b=fAn8, out=efAn8);
+    Or(a=gAn8, b=hAn8, out=ghAn8);
+    Or(a=abAn8, b=cdAn8, out=abcd8);
+    Or(a=efAn8, b=ghAn8, out=efgh8);
+    Or(a=abcd8, b=efgh8, out=out[8]);
+    //9
+    And(a=selA, b=a[9], out=aAn9);
+    And(a=selB, b=b[9], out=bAn9);
+    And(a=selC, b=c[9], out=cAn9);
+    And(a=selD, b=d[9], out=dAn9);
+    And(a=selE, b=e[9], out=eAn9);
+    And(a=selF, b=f[9], out=fAn9);
+    And(a=selG, b=g[9], out=gAn9);
+    And(a=selH, b=h[9], out=hAn9);
+    Or(a=aAn9, b=bAn9, out=abAn9);
+    Or(a=cAn9, b=dAn9, out=cdAn9);
+    Or(a=eAn9, b=fAn9, out=efAn9);
+    Or(a=gAn9, b=hAn9, out=ghAn9);
+    Or(a=abAn9, b=cdAn9, out=abcd9);
+    Or(a=efAn9, b=ghAn9, out=efgh9);
+    Or(a=abcd9, b=efgh9, out=out[9]);
+    //10
+    And(a=selA, b=a[10], out=aAn10);
+    And(a=selB, b=b[10], out=bAn10);
+    And(a=selC, b=c[10], out=cAn10);
+    And(a=selD, b=d[10], out=dAn10);
+    And(a=selE, b=e[10], out=eAn10);
+    And(a=selF, b=f[10], out=fAn10);
+    And(a=selG, b=g[10], out=gAn10);
+    And(a=selH, b=h[10], out=hAn10);
+    Or(a=aAn10, b=bAn10, out=abAn10);
+    Or(a=cAn10, b=dAn10, out=cdAn10);
+    Or(a=eAn10, b=fAn10, out=efAn10);
+    Or(a=gAn10, b=hAn10, out=ghAn10);
+    Or(a=abAn10, b=cdAn10, out=abcd10);
+    Or(a=efAn10, b=ghAn10, out=efgh10);
+    Or(a=abcd10, b=efgh10, out=out[10]);
+    //11
+    And(a=selA, b=a[11], out=aAn11);
+    And(a=selB, b=b[11], out=bAn11);
+    And(a=selC, b=c[11], out=cAn11);
+    And(a=selD, b=d[11], out=dAn11);
+    And(a=selE, b=e[11], out=eAn11);
+    And(a=selF, b=f[11], out=fAn11);
+    And(a=selG, b=g[11], out=gAn11);
+    And(a=selH, b=h[11], out=hAn11);
+    Or(a=aAn11, b=bAn11, out=abAn11);
+    Or(a=cAn11, b=dAn11, out=cdAn11);
+    Or(a=eAn11, b=fAn11, out=efAn11);
+    Or(a=gAn11, b=hAn11, out=ghAn11);
+    Or(a=abAn11, b=cdAn11, out=abcd11);
+    Or(a=efAn11, b=ghAn11, out=efgh11);
+    Or(a=abcd11, b=efgh11, out=out[11]);
+    //12
+    And(a=selA, b=a[12], out=aAn12);
+    And(a=selB, b=b[12], out=bAn12);
+    And(a=selC, b=c[12], out=cAn12);
+    And(a=selD, b=d[12], out=dAn12);
+    And(a=selE, b=e[12], out=eAn12);
+    And(a=selF, b=f[12], out=fAn12);
+    And(a=selG, b=g[12], out=gAn12);
+    And(a=selH, b=h[12], out=hAn12);
+    Or(a=aAn12, b=bAn12, out=abAn12);
+    Or(a=cAn12, b=dAn12, out=cdAn12);
+    Or(a=eAn12, b=fAn12, out=efAn12);
+    Or(a=gAn12, b=hAn12, out=ghAn12);
+    Or(a=abAn12, b=cdAn12, out=abcd12);
+    Or(a=efAn12, b=ghAn12, out=efgh12);
+    Or(a=abcd12, b=efgh12, out=out[12]);
+    //13
+    And(a=selA, b=a[13], out=aAn13);
+    And(a=selB, b=b[13], out=bAn13);
+    And(a=selC, b=c[13], out=cAn13);
+    And(a=selD, b=d[13], out=dAn13);
+    And(a=selE, b=e[13], out=eAn13);
+    And(a=selF, b=f[13], out=fAn13);
+    And(a=selG, b=g[13], out=gAn13);
+    And(a=selH, b=h[13], out=hAn13);
+    Or(a=aAn13, b=bAn13, out=abAn13);
+    Or(a=cAn13, b=dAn13, out=cdAn13);
+    Or(a=eAn13, b=fAn13, out=efAn13);
+    Or(a=gAn13, b=hAn13, out=ghAn13);
+    Or(a=abAn13, b=cdAn13, out=abcd13);
+    Or(a=efAn13, b=ghAn13, out=efgh13);
+    Or(a=abcd13, b=efgh13, out=out[13]);
+    //14
+    And(a=selA, b=a[14], out=aAn14);
+    And(a=selB, b=b[14], out=bAn14);
+    And(a=selC, b=c[14], out=cAn14);
+    And(a=selD, b=d[14], out=dAn14);
+    And(a=selE, b=e[14], out=eAn14);
+    And(a=selF, b=f[14], out=fAn14);
+    And(a=selG, b=g[14], out=gAn14);
+    And(a=selH, b=h[14], out=hAn14);
+    Or(a=aAn14, b=bAn14, out=abAn14);
+    Or(a=cAn14, b=dAn14, out=cdAn14);
+    Or(a=eAn14, b=fAn14, out=efAn14);
+    Or(a=gAn14, b=hAn14, out=ghAn14);
+    Or(a=abAn14, b=cdAn14, out=abcd14);
+    Or(a=efAn14, b=ghAn14, out=efgh14);
+    Or(a=abcd14, b=efgh14, out=out[14]);
+    //15
+    And(a=selA, b=a[15], out=aAn15);
+    And(a=selB, b=b[15], out=bAn15);
+    And(a=selC, b=c[15], out=cAn15);
+    And(a=selD, b=d[15], out=dAn15);
+    And(a=selE, b=e[15], out=eAn15);
+    And(a=selF, b=f[15], out=fAn15);
+    And(a=selG, b=g[15], out=gAn15);
+    And(a=selH, b=h[15], out=hAn15);
+    Or(a=aAn15, b=bAn15, out=abAn15);
+    Or(a=cAn15, b=dAn15, out=cdAn15);
+    Or(a=eAn15, b=fAn15, out=efAn15);
+    Or(a=gAn15, b=hAn15, out=ghAn15);
+    Or(a=abAn15, b=cdAn15, out=abcd15);
+    Or(a=efAn15, b=ghAn15, out=efgh15);
+    Or(a=abcd15, b=efgh15, out=out[15]);
+}
